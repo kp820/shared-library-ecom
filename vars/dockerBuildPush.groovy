@@ -20,7 +20,7 @@ def call(Map config = [:]) {
                 }
             }
 
-            stage('Docker Login') {
+            stage('Docker Login updated in local') {
                 steps {
                     dockerLogin()
                 }
