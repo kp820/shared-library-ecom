@@ -45,6 +45,8 @@ def call(Map config = [:]) {
             }
             failure {
                 echo "Pipeline failed! Check the logs for details."
+                echo "rough content - stash ex"
+                echo "done"
             }
             always {
                 cleanupDocker()
