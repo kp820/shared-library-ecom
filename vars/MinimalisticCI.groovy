@@ -49,7 +49,7 @@ def call(Map config = [:]) {
                 echo "done"
             }
             always {
-                cleanupDocker()
+                cleanup()
             }
         }
     }
