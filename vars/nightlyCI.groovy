@@ -1,25 +1,26 @@
 def call(Map config = [:]) {
-    def defaultConfig = [
-        dockerImage: 'default-image',
-        dockerRegistry: 'docker.io',
-        emailRecipients: 'divyajyothivundavalli@gmail.com',
-        gitUrl: '',
-        gitBranch: 'main',
-        triggers: [:],
-        buildType: 'regular' // Can be 'regular' or 'nightly'
-    ]
-    
-    config = defaultConfig + config
-    
-    pipeline {
-        agent any
-        
-        environment {
-            DOCKER_IMAGE = "${config.dockerImage}"
-            DOCKER_REGISTRY_CREDENTIALS = credentials('docker')
-            BUILD_TYPE = "${config.buildType}"
-            NIGHTLY_TAG = "nightly-${BUILD_TIMESTAMP}"
-        }
+  def defaultConfig = [
+    pythonVersion: 'python3',
+    dockerImage: 'divyavundavalli/ecom_projectexci',
+    gitUrl: 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git',
+    gitBranch: 'main',
+    emailRecipients: 'divyajyothivundavalli@gmail.com',
+    triggers: [:],
+    buildType: 'nightly'
+  ]
+
+  config = defaultConfig + config
+
+  pipeline {
+    agent any
+
+    environment {
+      PYTHON_VERSION = "${config.pythonVersion}"
+      DOCKER_IMAGE = "${config.dockerImage}"
+      DOCKER_REGISTRY_CREDENTIALS = credentials('docker')
+      BUILD_TYPE = "${config.buildType}"
+      NIGHTLY_TAG = "nightly-${BUILD_TIMESTAMP}"
+    }
         
         stages {
             stage('Checkout') {
