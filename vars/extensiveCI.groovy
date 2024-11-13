@@ -107,22 +107,22 @@ def call(Map config = [:]) {
             }
         }
         
-        post {
-            success {
-                script {
-                    notifyBuildStatus('SUCCESS')
-                }
-            }
-            failure {
-                script {
-                    notifyBuildStatus('FAILURE')
-                }
-            }
-            always {
-                script {
-                    cleanup()
-                }
-            }
-        }
+        // post {
+        //     success {
+        //         script {
+        //             notifyBuildStatus('SUCCESS')
+        //         }
+        //     }
+        //     failure {
+        //         script {
+        //             notifyBuildStatus('FAILURE')
+        //         }
+        //     }
+        //     always {
+        //         script {
+        //             cleanup()
+        //         }
+        //     }
+        // }
     }
 }
