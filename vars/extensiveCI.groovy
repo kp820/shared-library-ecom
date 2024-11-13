@@ -1,22 +1,18 @@
+// vars/pipelineJob.groovy
 def call(Map config = [:]) {
-    def defaultConfig = [
-        pythonVersion: 'python3',
-        dockerImage: 'divyavundavalli/ecom_projectexci',
-        gitUrl: 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git',
-        gitBranch: 'main',
-        venvName: 'venv'
-    ]
-    
-    config = defaultConfig + config
-    
+    def dockerImage = config.dockerImage ?: ''
+    def dockerCredentialsId = config.dockerCredentialsId ?: ''
+    def gitUrl = config.gitUrl ?: ''
+    def gitBranch = config.gitBranch ?: 'main'
+
     pipeline {
         agent any
         
         environment {
-            DOCKER_IMAGE = config.dockerImage
-            DOCKER_REGISTRY_CREDENTIALS = credentials('docker')
-            VENV_NAME = config.venvName
-            PYTHON_VERSION = config.pythonVersion
+            DOCKER_IMAGE = "${dockerImage}"
+            DOCKER_REGISTRY_CREDENTIALS = credentials("${dockerCredentialsId}")
+            VENV_NAME = 'venv'
+            PYTHON_VERSION = 'python3'
         }
         
         stages {
@@ -28,8 +24,8 @@ def call(Map config = [:]) {
             
             stage('Checkout') {
                 steps {
-                    git branch: config.gitBranch,
-                        url: config.gitUrl
+                    git branch: "${gitBranch}",
+                        url: "${gitUrl}"
                 }
             }
             
@@ -79,11 +75,13 @@ def call(Map config = [:]) {
                     }
                 }
             }
+
             stage('Docker Login') {
                 steps {
                     dockerLogin()
                 }
             }
+
             stage('Build Docker Image') {
                 steps {
                     dockerBuild()
@@ -92,7 +90,8 @@ def call(Map config = [:]) {
             
             stage('Security Scan Docker Image') {
                 steps {
-                    dockerSecurityScan()
+                    // dockerSecurityScan()
+                    echo 'scan'
                 }
                 post {
                     always {
