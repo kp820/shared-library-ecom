@@ -88,17 +88,17 @@ def call(Map config = [:]) {
                 }
             }
             
-            stage('Security Scan Docker Image') {
-                steps {
-                    // dockerSecurityScan()
-                    echo 'scan'
-                }
-                post {
-                    always {
-                        archiveArtifacts artifacts: 'security-reports/trivy-results.txt', allowEmptyArchive: true
-                    }
-                }
-            }
+            // stage('Security Scan Docker Image') {
+            //     steps {
+            //         // dockerSecurityScan()
+            //         echo 'scan'
+            //     }
+            //     post {
+            //         always {
+            //             archiveArtifacts artifacts: 'security-reports/trivy-results.txt', allowEmptyArchive: true
+            //         }
+            //     }
+            // }
             
             stage('Docker Push') {
                 steps {
