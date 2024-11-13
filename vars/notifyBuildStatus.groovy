@@ -1,10 +1,9 @@
-def call(Map config) {
+def notifyBuildStatus(String status) {
     def jobName = env.JOB_NAME
     def buildNumber = env.BUILD_NUMBER
-    def pipelineStatus = currentBuild.result ?: 'SUCCESS' // Default to 'SUCCESS' if no result is set
-    def subject = "${jobName} - Build ${buildNumber} - ${pipelineStatus}"
-
-    def body = pipelineStatus == 'SUCCESS' 
+    def subject = "${jobName} - Build ${buildNumber} - ${status}"
+    
+    def body = status == 'SUCCESS' 
         ? "Build Successful: ${jobName} - Build ${buildNumber}\n\nBuild completed successfully."
         : "Build Failed: ${jobName} - Build ${buildNumber}\n\nPlease check the logs for details."
 
