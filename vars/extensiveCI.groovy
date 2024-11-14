@@ -170,6 +170,7 @@ def call(Map config = [:]) {
         // }
         post {
         always {
+            notifyBuildStatus()
             // script {
             //     def jobName = env.JOB_NAME
             //     def buildNumber = env.BUILD_NUMBER
