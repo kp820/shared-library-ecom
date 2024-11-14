@@ -43,7 +43,61 @@ def call(Map config = [:]) {
                 }
             }
         }
-
+            
+        stage('Code Quality & Security') {
+            parallel {
+                stage('Lint Check') {
+                    steps {
+                        script {
+                            sh """
+                                . ${VENV_NAME}/bin/activate
+                                pip install flake8 pylint
+                                # Run flake8
+                                flake8 . --max-line-length=120 --exclude=${VENV_NAME} || true
+                                # Run pylint
+                                pylint --exit-zero *.py || true
+                            """
+                        }
+                    }
+                }
+                
+                stage('Security Scan') {
+                    steps {
+                        script {
+                            try {
+                                sh """
+                                    . ${VENV_NAME}/bin/activate
+                                    # Install security scanning tools
+                                    pip install bandit safety detect-secrets
+                                    
+                                    # Create reports directory
+                                    mkdir -p security-reports
+                                    
+                                    # Run Bandit security scan
+                                    bandit -r . -f json -o security-reports/bandit-results.json -ll || true
+                                    
+                                    # Check dependencies for known security vulnerabilities
+                                    safety check --output json > security-reports/safety-results.json || true
+                                    
+                                    # Run detect-secrets for credential scanning
+                                    detect-secrets scan . > security-reports/secrets-scan.json || true
+                                """
+                            } catch (Exception e) {
+                                echo "Security scan failed: ${e.getMessage()}"
+                                currentBuild.result = 'UNSTABLE'
+                            }
+                        }
+                    }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'security-reports/**/*', allowEmptyArchive: true
+                        }
+                    }
+                }
+            }
+        }
+        
+                
             stage('Docker Login') {
                 steps {
                     dockerLogin()
