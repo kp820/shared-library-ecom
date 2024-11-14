@@ -15,6 +15,12 @@ def call(Map config = [:]) {
         }
 
         stages {
+            
+            stage('Cleanup Workspace') {
+              steps {
+                cleanWs()
+              }
+          }
             stage('Checkout') {
                 steps {
                     git branch: "${gitBranch}",
