@@ -10,6 +10,8 @@ def call(Map config = [:]) {
         environment {
             DOCKER_IMAGE = "${dockerImage}"
             DOCKER_REGISTRY_CREDENTIALS = credentials("${dockerCredentialsId}")
+            VENV_NAME = "venv"
+            PYTHON_VERSION = "python3"
         }
 
         stages {
