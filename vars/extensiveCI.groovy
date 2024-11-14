@@ -27,8 +27,24 @@ def call(Map config = [:]) {
                         url: "${gitUrl}"
                 }
             }
+            
+        stage('Setup Python Environment') {
+            steps {
+                script {
+                    sh """
+                        ${PYTHON_VERSION} -m venv ${VENV_NAME}
+                        . ${VENV_NAME}/bin/activate
+                        pip install --upgrade pip
+                        # Install with specific versions to avoid conflicts
+                        pip install Flask==2.0.1 Werkzeug==2.0.1
+                        pip install pytest==7.4.0 pytest-cov==4.1.0
+                        pip install -r requirements.txt
+                    """
+                }
+            }
+        }
 
-            stage('Docker Login updated in local') {
+            stage('Docker Login') {
                 steps {
                     dockerLogin()
                 }
