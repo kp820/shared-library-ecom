@@ -96,6 +96,44 @@ def call(Map config = [:]) {
                 }
             }
         }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    try {
+                        sh """
+                            . ${VENV_NAME}/bin/activate
+                            # Create coverage directory
+                            mkdir -p coverage
+                            
+                            # Run tests with coverage
+                            python -m pytest -v \
+                                --cov=. \
+                                --cov-report=xml:coverage/coverage.xml \
+                                --cov-report=html:coverage/htmlcov \
+                                test.py
+                        """
+                    } catch (Exception e) {
+                        currentBuild.result = 'UNSTABLE'
+                        echo "Tests failed: ${e.getMessage()}"
+                    }
+                }
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'coverage/**/*', allowEmptyArchive: true
+                    publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'coverage/htmlcov',
+                        reportFiles: 'index.html',
+                        reportName: 'Coverage Report',
+                        reportTitles: 'Coverage Report'
+                    ])
+                }
+            }
+        }
         
                 
             stage('Docker Login') {
