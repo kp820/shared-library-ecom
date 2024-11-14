@@ -1,0 +1,86 @@
+pipelineJob('minimalistic-ci-js') {
+    description('Minimalistic CI for Ecom Project')
+
+    parameters {
+        stringParam('DOCKER_IMAGE', 'divyavundavalli/ecom_project', 'Docker image name')
+        stringParam('GIT_URL', 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git', 'Git repository URL')
+        stringParam('GIT_BRANCH', 'main', 'Git branch')
+    }
+
+    definition {
+        cps {
+            script('''
+                @Library('shared-library@main') _
+
+                
+                MinimalisticCI(
+                    dockerImage: params.DOCKER_IMAGE,
+                    dockerCredentialsId: 'docker',
+                    gitUrl: params.GIT_URL,
+                    gitBranch: params.GIT_BRANCH
+                )
+            '''.stripIndent())
+            sandbox()
+        }
+    }
+}
+// extensive ci seed job code
+
+pipelineJob('extensive-ci-js') {
+    description('extensive CI for Ecom Project')
+
+    parameters {
+        stringParam('DOCKER_IMAGE', 'divyavundavalli/ecom_project', 'Docker image name')
+        stringParam('GIT_URL', 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git', 'Git repository URL')
+        stringParam('GIT_BRANCH', 'main', 'Git branch')
+    }
+
+    definition {
+        cps {
+            script('''
+                @Library('shared-library@main') _
+
+                
+                extensiveCI(
+                    dockerImage: params.DOCKER_IMAGE,
+                    dockerCredentialsId: 'docker',
+                    gitUrl: params.GIT_URL,
+                    gitBranch: params.GIT_BRANCH
+                )
+            '''.stripIndent())
+            sandbox()
+        }
+    }
+}
+
+// Create "ecom-nightly-build" pipeline
+// createPipeline("ecom-nightly-build", "0 0 * * *")
+pipelineJob('nightly-ci-js') {
+    description('nightly CI for Ecom Project')
+
+    parameters {
+        stringParam('DOCKER_IMAGE', 'divyavundavalli/ecom_project', 'Docker image name')
+        stringParam('GIT_URL', 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git', 'Git repository URL')
+        stringParam('GIT_BRANCH', 'main', 'Git branch')
+    }
+    triggers {
+            cron("H/5 * * * *")
+        }    
+
+    definition {
+        cps {
+            script('''
+                @Library('shared-library@main') _
+
+                
+                nightlyCI(
+                    dockerImage: params.DOCKER_IMAGE,
+                    dockerCredentialsId: 'docker',
+                    gitUrl: params.GIT_URL,
+                    gitBranch: params.GIT_BRANCH
+                )
+            '''.stripIndent())
+            sandbox()
+        }
+    }
+}
