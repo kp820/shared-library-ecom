@@ -1,4 +1,4 @@
-def notifyBuildStatus() {
+def call() {
 script {
                 def jobName = env.JOB_NAME
                 def buildNumber = env.BUILD_NUMBER
