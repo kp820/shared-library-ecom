@@ -199,6 +199,7 @@ def call(Map config = [:]) {
                     mimeType: 'text/html'
                 )
             }
+            cleanup()
         }
     }
     }
