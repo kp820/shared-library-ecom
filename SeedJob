@@ -2,8 +2,8 @@ pipelineJob('minimalistic-ci-js') {
     description('Minimalistic CI for Ecom Project')
 
     parameters {
-        stringParam('DOCKER_IMAGE', 'divyavundavalli/ecom_project', 'Docker image name')
-        stringParam('GIT_URL', 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git', 'Git repository URL')
+        stringParam('DOCKER_IMAGE', 'kp420/ecom_project', 'Docker image name')
+        stringParam('GIT_URL', 'https://github.com/kp820/Ecom_Project_space.git', 'Git repository URL')
         stringParam('GIT_BRANCH', 'main', 'Git branch')
     }
 
@@ -30,8 +30,8 @@ pipelineJob('extensive-ci-js') {
     description('extensive CI for Ecom Project')
 
     parameters {
-        stringParam('DOCKER_IMAGE', 'divyavundavalli/ecom_project', 'Docker image name')
-        stringParam('GIT_URL', 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git', 'Git repository URL')
+        stringParam('DOCKER_IMAGE', 'kp420/ecom_project', 'Docker image name')
+        stringParam('GIT_URL', 'https://github.com/kp820/Ecom_Project_space.git', 'Git repository URL')
         stringParam('GIT_BRANCH', 'main', 'Git branch')
     }
 
@@ -59,8 +59,8 @@ pipelineJob('nightly-ci-js') {
     description('nightly CI for Ecom Project')
 
     parameters {
-        stringParam('DOCKER_IMAGE', 'divyavundavalli/ecom_project', 'Docker image name')
-        stringParam('GIT_URL', 'https://github.com/DivyaJyothiVundavalli/Ecom_Project_space.git', 'Git repository URL')
+        stringParam('DOCKER_IMAGE', 'kp420/ecom_project', 'Docker image name')
+        stringParam('GIT_URL', 'https://github.com/kp820/Ecom_Project_space.git', 'Git repository URL')
         stringParam('GIT_BRANCH', 'main', 'Git branch')
     }
     triggers {
