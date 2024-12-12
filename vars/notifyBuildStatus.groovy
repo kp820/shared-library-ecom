@@ -22,9 +22,9 @@ script {
                 emailext(
                     subject: "${jobName} - Build ${buildNumber} - ${pipelineStatus}",
                     body: body,
-                    to: 'divyavundavalli777@gmail.com',
-                    from: 'divyavundavalli777@gmail.com',
-                    replyTo: 'divyavundavalli777@gmail.com',
+                    to: 'kamtakp94@gmail.com',
+                    from: 'kamtakp94@gmail.com',
+                    replyTo: 'kamtakp94@gmail.com',
                     mimeType: 'text/html'
                 )
             }
