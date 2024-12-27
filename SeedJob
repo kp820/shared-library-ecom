@@ -59,7 +59,7 @@ pipelineJob('nightly-ci-js') {
     description('nightly CI for Ecom Project')
 
     parameters {
-        stringParam('DOCKER_IMAGE', 'kp420/ecom_project2', 'Docker image name')
+        stringParam('DOCKER_IMAGE', 'kp420/ecom_project', 'Docker image name')
         stringParam('GIT_URL', 'https://github.com/kp820/Ecom_Project_space.git', 'Git repository URL')
         stringParam('GIT_BRANCH', 'main', 'Git branch')
     }
